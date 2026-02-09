@@ -1,0 +1,201 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ShieldCheck, Lock, Eye, Star } from "lucide-react";
+
+export default function DataSecuritySite() {
+  const questions = [
+    { q: "Что такое персональные данные?", options: ["Любая информация о человеке", "Только пароль", "Только номер телефона"], correct: 0 },
+    { q: "Какой пароль самый надёжный?", options: ["123456", "Имя и дата рождения", "Длинный, с буквами, цифрами и символами"], correct: 2 },
+    { q: "Можно ли делиться паролями?", options: ["Да, с друзьями", "Нет, никогда", "Иногда"], correct: 1 },
+    { q: "Что такое фишинг?", options: ["Вид рыбалки", "Кража данных через поддельные сайты", "Антивирус"], correct: 1 },
+    { q: "Нужно ли проверять сайты?", options: ["Нет", "Да, особенно перед вводом данных", "Только иногда"], correct: 1 },
+    { q: "Безопасно ли использовать один пароль везде?", options: ["Да", "Нет", "Только для игр"], correct: 1 },
+    { q: "Что делать при подозрительном письме?", options: ["Открыть", "Удалить или пожаловаться", "Переслать"], correct: 1 },
+    { q: "Зачем нужна двухфакторная аутентификация?", options: ["Для красоты", "Для дополнительной защиты", "Она не нужна"], correct: 1 },
+    { q: "Можно ли публиковать личные данные в соцсетях?", options: ["Да", "Нет", "Только частично и осторожно"], correct: 2 },
+    { q: "Антивирус нужен?", options: ["Нет", "Да", "Только на компьютере"], correct: 1 },
+  ];
+
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [checked, setChecked] = useState(false);
+
+  const finished = answers.every(a => a !== null);
+  const score = answers.reduce((acc, ans, i) => acc + (ans === questions[i].correct ? 1 : 0), 0);
+  const progress = (answers.filter(a => a !== null).length / questions.length) * 100;
+
+  const stars = score <= 4 ? 2 : score <= 6 ? 3 : score <= 8 ? 4 : 5;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-sky-100 to-emerald-100 text-gray-900 font-sans">
+
+      {/* Hero */}
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="py-20 px-6 text-center"
+      >
+        <h1 className="text-4xl sm:text-6xl font-extrabold mb-6">Безопасность личных данных</h1>
+        <p className="text-gray-700 max-w-4xl mx-auto text-lg sm:text-xl">
+          Образовательный сайт о защите персональных данных, интернет-угрозах и цифровой безопасности.
+        </p>
+      </motion.section>
+
+      {/* Content */}
+      <section className="px-6 pb-20 max-w-6xl mx-auto space-y-16">
+        {[{
+          title: "Персональные данные",
+          icon: <ShieldCheck size={32}/> ,
+          color: "text-indigo-700",
+          img: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04",
+          text: [
+            "Персональные данные — это сведения, которые позволяют прямо или косвенно определить личность человека.",
+            "К ним относятся имя и фамилия, номер телефона, адрес, электронная почта, фотографии, данные паспорта и аккаунтов.",
+            "Такая информация используется при регистрации на сайтах, в социальных сетях, онлайн-магазинах и мобильных приложениях.",
+            "Персональные данные имеют высокую ценность, поэтому часто становятся целью мошенников и злоумышленников.",
+            "Знание того, какие данные являются персональными, помогает осознанно защищать себя в цифровой среде."
+          ]
+        },{
+          title: "Как обезопасить свои данные",
+          icon: <Lock size={32}/> ,
+          color: "text-emerald-700",
+          img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7",
+          text: [
+            "Защита персональных данных начинается с использования надёжных и уникальных паролей для каждого сервиса.",
+            "Рекомендуется применять длинные пароли с буквами разного регистра, цифрами и специальными символами.",
+            "Двухфакторная аутентификация добавляет дополнительный уровень защиты аккаунтов.",
+            "Важно регулярно обновлять операционную систему и приложения, чтобы устранять уязвимости.",
+            "Не следует переходить по подозрительным ссылкам и вводить личные данные на неизвестных сайтах."
+          ]
+        },{
+          title: "Интернет-мошенничество",
+          icon: <Eye size={32}/> ,
+          color: "text-rose-700",
+          img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3",
+          text: [
+            "Интернет-мошенничество — это обман пользователей с целью кражи денег или персональных данных.",
+            "Одним из самых распространённых видов является фишинг — поддельные сайты и письма, маскирующиеся под официальные.",
+            "Мошенники могут представляться сотрудниками банков, служб поддержки или известных компаний.",
+            "Часто используются сообщения о срочных проблемах или выгодных предложениях, чтобы вызвать доверие.",
+            "Внимательность и проверка источников информации помогают избежать попадания в ловушки злоумышленников."
+          ]
+        }].map((b, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl grid md:grid-cols-2 gap-8"
+          >
+            <div>
+              <h2 className={`text-3xl sm:text-4xl font-bold mb-4 flex items-center gap-3 ${b.color}`}>{b.icon} {b.title}</h2>
+              {b.text.map((t, ti) => (
+                <p key={ti} className="text-gray-700 text-lg mb-3">{t}</p>
+              ))}
+            </div>
+            <img src={b.img} alt={b.title} className="rounded-2xl object-cover w-full h-64" />
+          </motion.div>
+        ))}
+      </section>
+
+      {/* Conclusion */}
+      <section className="px-6 pb-20 max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-200"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-indigo-700">Вывод</h2>
+          <p className="text-gray-700 text-lg mb-4">
+            Персональные данные — это ценная информация, которая требует внимательного и ответственного отношения.
+            В современном цифровом мире каждый человек ежедневно сталкивается с рисками утечки данных, мошенничества и злоупотребления личной информацией.
+          </p>
+          <p className="text-gray-700 text-lg mb-4">
+            Соблюдение простых правил безопасности, использование надёжных паролей, осторожность в интернете и знание основных видов мошенничества
+            значительно снижают вероятность стать жертвой киберпреступников.
+          </p>
+          <p className="text-gray-700 text-lg">
+            Формирование цифровой грамотности и осознанного поведения в сети — важная задача каждого пользователя интернета.
+            Защищая свои данные сегодня, мы обеспечиваем безопасность, спокойствие и уверенность в будущем.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Test */}
+      <section className="px-6 pb-20">
+        <h2 className="text-4xl font-bold mb-8 text-center text-indigo-700">Тест</h2>
+
+        {/* Progress bar */}
+        <div className="max-w-3xl mx-auto mb-6">
+          <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-indigo-500"
+              animate={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="text-center mt-2 text-sm text-gray-600">Прогресс: {Math.round(progress)}%</p>
+        </div>
+
+        <div className="space-y-6 max-w-3xl mx-auto">
+          {questions.map((q, qi) => (
+            <div key={qi} className="bg-white rounded-2xl p-5 shadow">
+              <p className="mb-4 font-semibold">{qi + 1}. {q.q}</p>
+              {q.options.map((opt, oi) => (
+                <button
+                  key={oi}
+                  className={`w-full text-left py-2 px-4 rounded-xl mb-2 transition ${answers[qi] === oi ? "bg-indigo-300" : "bg-sky-100"}`}
+                  onClick={() => {
+                    if (checked) return;
+                    const a = [...answers];
+                    a[qi] = oi;
+                    setAnswers(a);
+                  }}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          {!checked && (
+            <button
+              disabled={!finished}
+              onClick={() => setChecked(true)}
+              className={`px-8 py-3 rounded-2xl font-bold text-white ${finished ? "bg-indigo-600" : "bg-gray-400"}`}
+            >
+              Проверить тест
+            </button>
+          )}
+
+          {checked && (
+            <div className="mt-8">
+              <p className="text-2xl font-bold mb-4">Ваша оценка:</p>
+              <div className="flex justify-center gap-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className={i < stars ? "text-yellow-400" : "text-gray-300"} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Sources */}
+      <section className="px-6 pb-20 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6">Источники</h2>
+        <ul className="list-disc list-inside text-gray-700 space-y-2">
+          <li>Роскомнадзор — Персональные данные</li>
+          <li>Лаборатория Касперского — Кибербезопасность</li>
+          <li>Wikipedia — Информационная безопасность</li>
+        </ul>
+      </section>
+
+      <footer className="text-center text-gray-500 pb-8">© 2026 Безопасность личных данных</footer>
+    </div>
+  );
+}
